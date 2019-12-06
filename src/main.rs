@@ -3,27 +3,20 @@ extern crate wfc;
 extern crate grid_2d;
 extern crate coord_2d;
 
-pub use coord_2d::{Coord, Size};
-
-use grid_2d::Grid;
-use std::num::NonZeroU32;
-use image::{DynamicImage, Rgba, RgbaImage};
-use wfc::overlapping::{OverlappingPatterns};
-use wfc::{ForbidPattern, ForbidInterface, ForbidNothing, RunOwn, retry, wrap, Wrap, PropagateError, Wave};
-pub use wrap::WrapXY;
-pub use wfc::orientation::{self, Orientation};
-
 use std::error::Error;
 use std::path::Path;
 use rand::Rng;
+use std::num::NonZeroU32;
 
-fn u32conv(x:u32) -> [u8;4] {
-    let _b1 : u8 = ((x >> 24) & 0xff) as u8;
-    let b2 : u8 = ((x >> 16) & 0xff) as u8;
-    let b3 : u8 = ((x >> 8) & 0xff) as u8;
-    let b4 : u8 = (x & 0xff) as u8;
-    return [b4, b3, b2, 255]
-}
+use grid_2d::Grid;
+use image::{DynamicImage, Rgba, RgbaImage};
+use wfc::overlapping::{OverlappingPatterns};
+use wfc::{ForbidPattern, RunOwn, retry, wrap, Wrap, PropagateError};
+
+pub use coord_2d::{Coord, Size};
+pub use wrap::WrapXY;
+pub use wfc::orientation::{Orientation};
+pub use wfc::{ForbidNothing, ForbidInterface};
 
 struct TilePattern {
     grid: Grid<u32>,
@@ -66,6 +59,13 @@ impl TilePattern {
         return Ok(grid);
     }
 }
+fn u32conv(x:u32) -> [u8;4] {
+    let _b1 : u8 = ((x >> 24) & 0xff) as u8;
+    let b2 : u8 = ((x >> 16) & 0xff) as u8;
+    let b3 : u8 = ((x >> 8) & 0xff) as u8;
+    let b4 : u8 = (x & 0xff) as u8;
+    return [b4, b3, b2, 255]
+}
 fn grid_to_image(grid: &Grid<u32>) -> DynamicImage {
     let size = grid.size();
     let mut rgba_image = RgbaImage::new(size.width(), size.height());
@@ -75,7 +75,7 @@ fn grid_to_image(grid: &Grid<u32>) -> DynamicImage {
     return DynamicImage::ImageRgba8(rgba_image);
 }
 fn main() -> Result<(), Box<dyn Error>> {
-    let grid = (TilePattern::from_csv("small.csv").expect("err")).run_collapse(Size::new(48,48), NonZeroU32::new(2).unwrap(), 10, &[Orientation::Original], WrapXY, ForbidNothing, &mut rand::thread_rng()).expect("Err");
+    let grid = (TilePattern::from_csv("small.csv").expect("err")).run_collapse(Size::new(256, 256), NonZeroU32::new(2).unwrap(), 10, &[Orientation::Original], WrapXY, ForbidNothing, &mut rand::thread_rng()).expect("Err");
     let img = grid_to_image(&grid);
     img.save("outnew.png").expect("Failed to save");
     return Ok(());
