@@ -2,9 +2,6 @@ extern crate wfc;
 extern crate grid_2d;
 extern crate coord_2d;
 
-use std::error::Error;
-use std::num::NonZeroU32;
-
 pub use coord_2d::{Coord, Size};
 pub use wfc::{ForbidNothing, ForbidInterface, ForbidPattern, Wrap, PatternId};
 pub use wfc::wrap::WrapXY;
