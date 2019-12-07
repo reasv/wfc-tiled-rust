@@ -4,6 +4,7 @@ version = "1.0.0"
 authors = ["reasv <7143787+reasv@users.noreply.github.com>"]
 edition = "2018"
 license = "MIT"
+description = "Small library for Wave Function Collapse on Tile-based maps, using the `wfc` crate. Provides Tiled integration"
 
 [dependencies]
 csv = "1.1"
