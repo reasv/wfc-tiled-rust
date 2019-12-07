@@ -609,7 +609,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "wfc-tiled"
+name = "wfc_tiled"
 version = "0.1.0"
 dependencies = [
  "coord_2d 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",

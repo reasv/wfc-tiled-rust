@@ -1,26 +1,15 @@
-extern crate image;
 extern crate wfc;
-extern crate grid_2d;
 extern crate coord_2d;
 
-use std::error::Error;
-use std::path::Path;
-use std::num::NonZeroU32;
-use std::io::prelude::*;
 use std::collections::HashSet;
 
 use rand::Rng;
-use grid_2d::Grid;
-use image::{DynamicImage, Rgba, RgbaImage};
-use wfc::overlapping::{OverlappingPatterns};
-use wfc::{ForbidPattern, RunOwn, retry, wrap, Wrap, PropagateError, PatternId};
+use coord_2d::Coord;
 
-use coord_2d::{Coord, Size};
-use wrap::WrapXY;
-use wfc::orientation::{Orientation};
-use wfc::{ForbidNothing, ForbidInterface};
+use wfc::{ForbidPattern, Wrap, PatternId, ForbidInterface};
 
 use crate::tile_pattern::TilePattern;
+
 pub struct ForceBorderForbid {
     pattern_ids: HashSet<PatternId>,
     offset: i32,
@@ -45,7 +34,7 @@ impl ForbidPattern for ForceBorderForbid {
     }
 }
 impl ForceBorderForbid {
-    pub fn new(pattern: TilePattern, pattern_size: u32) -> ForceBorderForbid{
+    pub fn new(pattern: &TilePattern, pattern_size: u32) -> ForceBorderForbid{
         let input_size = pattern.overlapping_patterns.grid().size();
         let bottom_right_offset = pattern_size - (pattern_size / 2);
         let id_grid = pattern.overlapping_patterns.id_grid();

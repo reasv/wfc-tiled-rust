@@ -1,5 +1,5 @@
 [package]
-name = "wfc-tiled"
+name = "wfc_tiled"
 version = "0.1.0"
 authors = ["reasv <7143787+reasv@users.noreply.github.com>"]
 edition = "2018"

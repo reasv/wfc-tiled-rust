@@ -6,19 +6,14 @@ extern crate coord_2d;
 use std::error::Error;
 use std::path::Path;
 use std::num::NonZeroU32;
-use std::io::prelude::*;
-use std::collections::HashSet;
 
 use rand::Rng;
 use grid_2d::Grid;
-use image::{DynamicImage, Rgba, RgbaImage};
+use wfc::{ForbidPattern, RunOwn, retry, Wrap, PropagateError};
+use wfc::orientation::{Orientation};
 use wfc::overlapping::{OverlappingPatterns};
-use wfc::{ForbidPattern, RunOwn, retry, wrap, Wrap, PropagateError, PatternId};
 
-pub use coord_2d::{Coord, Size};
-pub use wrap::WrapXY;
-pub use wfc::orientation::{Orientation};
-pub use wfc::{ForbidNothing, ForbidInterface};
+use coord_2d::{Coord, Size};
 
 pub struct TilePattern {
     pub grid: Grid<u32>,
@@ -26,18 +21,18 @@ pub struct TilePattern {
 }
 
 impl TilePattern {
-    fn new(grid: Grid<u32>, pattern_size: NonZeroU32, orientation: &[Orientation]) -> TilePattern {
+    pub fn new(grid: Grid<u32>, pattern_size: NonZeroU32, orientation: &[Orientation]) -> TilePattern {
         let overlapping_patterns = OverlappingPatterns::new(grid.clone(), pattern_size, orientation);
         return TilePattern { grid, overlapping_patterns};
     }
-    fn from_vec(map: Vec<u32>, size: Size, pattern_size: NonZeroU32, orientation: &[Orientation]) -> TilePattern {
+    pub fn from_vec(map: Vec<u32>, size: Size, pattern_size: NonZeroU32, orientation: &[Orientation]) -> TilePattern {
         let grid = Grid::new_fn(size, |Coord { x, y }| {
             map[(y*(size.width() as i32) + x) as usize]
         });
         return TilePattern::new(grid, pattern_size, orientation);
     }
 
-    fn from_csv<P: AsRef<Path>>(path: P, pattern_size: NonZeroU32, orientation: &[Orientation]) -> Result<TilePattern, Box<dyn Error>>{
+    pub fn from_csv<P: AsRef<Path>>(path: P, pattern_size: NonZeroU32, orientation: &[Orientation]) -> Result<TilePattern, Box<dyn Error>>{
         let mut map = Vec::new();
         let mut rdr = csv::ReaderBuilder::new()
             .has_headers(false)
@@ -55,7 +50,7 @@ impl TilePattern {
         return Ok(TilePattern::from_vec(map, size, pattern_size, orientation));
     }
 
-    fn run_collapse<W: Wrap, F: ForbidPattern, R: Rng>(&self, output_size: Size, retry_times: usize, wrap: W, forbid: F, rng: &mut R) 
+    pub fn run_collapse<W: Wrap, F: ForbidPattern, R: Rng>(&self, output_size: Size, retry_times: usize, wrap: W, forbid: F, rng: &mut R) 
     -> Result<Grid<u32>, PropagateError> {
         let global_stats = self.overlapping_patterns.global_stats();
         let run = RunOwn::new_wrap_forbid(output_size, &global_stats, wrap, forbid, rng);
