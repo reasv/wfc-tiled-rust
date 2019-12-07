@@ -3,6 +3,7 @@ name = "wfc_tiled"
 version = "1.0.0"
 authors = ["reasv <7143787+reasv@users.noreply.github.com>"]
 edition = "2018"
+license = "MIT"
 
 [dependencies]
 csv = "1.1"
