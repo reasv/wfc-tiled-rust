@@ -38,7 +38,21 @@ fn format_tiled(map: String, size: Size, tileset: TileSet) -> String {
         tpath=tileset.image_path
     )
 }
-
+/// Save a [Grid](../grid_2d/grid/struct.Grid.html) to a Tiled .tmx file.
+/// 
+/// This is meant for previewing the output of [TilePattern::run_collapse()](struct.TilePattern.html#method.run_collapse) 
+/// in Tiled, although it can be edited normally.
+/// 
+/// It is fairly limited in that it creates a file with only one layer, one
+/// tileset and no extra settings.
+/// 
+/// # Examples
+///
+/// ```
+/// use wfc_tiled::grid_to_tiled;
+/// 
+/// grid_to_tiled(&grid, "output.tmx")?;
+/// ```
 pub fn grid_to_tiled<P: AsRef<Path>>(grid: &Grid<u32>, path: P, tileset: TileSet) -> Result<(), Box<dyn Error>> {
     let mut csv_grid = String::new();
     let size = grid.size();

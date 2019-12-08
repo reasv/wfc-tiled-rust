@@ -8,6 +8,19 @@ use grid_2d::Grid;
 
 use coord_2d::Coord;
 
+
+
+/// Save a [Grid](../grid_2d/grid/struct.Grid.html) to a CSV file.
+/// 
+/// This is meant for tile grids returned by the [TilePattern::run_collapse()](struct.TilePattern.html#method.run_collapse) method.
+/// 
+/// # Examples
+///
+/// ```
+/// use wfc_tiled::grid_to_csv;
+/// 
+/// grid_to_csv(&grid, "output.csv")?;
+/// ```
 pub fn grid_to_csv<P: AsRef<Path>>(grid: &Grid<u32>, path: P) -> Result<(), Box<dyn Error>> {
     let mut wtr = csv::WriterBuilder::new().from_path(path)?;
     let size = grid.size();

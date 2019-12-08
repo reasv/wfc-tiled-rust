@@ -10,6 +10,20 @@ use wfc::{ForbidPattern, Wrap, PatternId, ForbidInterface};
 
 use crate::tile_pattern::TilePattern;
 
+/// Used to prevent wrapping on the edges in the result
+/// 
+/// 
+/// # Examples
+/// A fully functional example can be found under `examples/anchor.rs`
+/// ```
+/// let pattern = TilePattern::from_csv(input_path, 
+///     NonZeroU32::new(pattern_size).unwrap(), 
+///     &[Orientation::Original]).expect("Error while creating pattern");
+/// 
+/// let forbid = ForceBorderForbid::new(&pattern, pattern_size);
+/// let grid = pattern.run_collapse(output_size, attempts,
+///  WrapXY, forbid, &mut rand::thread_rng()).expect("Error in WFC");
+/// ```
 pub struct ForceBorderForbid {
     pattern_ids: HashSet<PatternId>,
     offset: i32,
