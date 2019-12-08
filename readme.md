@@ -57,7 +57,7 @@ let tset = TileSet {
 grid_to_tiled(&grid, "out.tmx", tset)?;
 ```
 This assumes you have the necessary import 
-```Rust
+```rust
 use wfc_tiled::*;
 ```
 
