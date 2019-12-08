@@ -20,8 +20,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Extract patterns from input
     let pattern = TilePattern::from_csv(input_path, NonZeroU32::new(pattern_size).unwrap(), &[Orientation::Original]).expect("Error while creating pattern");
 
+    // Create forbid to force the border of the result to be equal to the contents 
+    // of the bottom right corner of the input.
+    // This is useful because it can effectively prevent the output from wrapping.
+    let forbid = ForceBorderForbid::new(&pattern, pattern_size);
+
     // Run Wave Function Collapse
-    let grid = pattern.run_collapse(output_size, attempts, WrapXY, ForbidNothing, &mut rand::thread_rng()).expect("Error in WFC");
+    let grid = pattern.run_collapse(output_size, attempts, WrapXY, forbid, &mut rand::thread_rng()).expect("Error in WFC");
 
     // Save as image (for preview purposes)
     let img = grid_to_image(&grid);
