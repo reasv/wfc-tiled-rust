@@ -10,11 +10,11 @@ As the underlying library only works on two dimensions, multiple layers are not 
 
 The crate includes commented example programs under the `examples/` folder.
 
-The `simple` example takes a CSV tilemap as its only argument and saves the output of wfc as a CSV as well as a .tmx file.
+The `simple` example takes a CSV tile map as its only argument and saves the output of wfc as a CSV as well as a .tmx file.
 
 You can run it with:
 ```
-cargo run --example=simple example\input.csv example\tilemap.png
+cargo run --example=simple examples\input.csv examples\tiles.png
 ```
 (Replace the slashes for non-Windows environments)
 
@@ -24,23 +24,31 @@ This will produce `out.tmx` and `out.csv` containing the 32x32 tile WFC output.
 For convenience I provide code equivalent to the example program here: 
 ```Rust
 let input_path = "example\\input.csv";
-let tilemap_path = "example\\tilemap.png";
+let tilesheet_path = "example\\tiles.png";
 let attempts = 1000;
 let pattern_size = 2;
 let output_size = Size::new(32, 32);
 
 // Extract patterns from input
-let pattern = TilePattern::from_csv(input_path, std::num::NonZeroU32::new(pattern_size).unwrap(), &[Orientation::Original]).expect("Error while creating pattern");
+let pattern = TilePattern::from_csv(input_path, 
+    std::num::NonZeroU32::new(pattern_size).unwrap(), 
+    &[Orientation::Original])
+    .expect("Error while creating pattern");
 
 // Run Wave Function Collapse
-let grid = pattern.run_collapse(output_size, attempts, WrapXY, ForbidNothing, &mut rand::thread_rng()).expect("Error in WFC");
+let grid = pattern.run_collapse(output_size, 
+    attempts, 
+    WrapXY, 
+    ForbidNothing, 
+    &mut rand::thread_rng())
+    .expect("Error in WFC");
 
 // Save as CSV
 grid_to_csv(&grid, "out.csv")?;
 
 // Save as Tiled .tmx file
 let tset = TileSet {
-    image_path: tilemap_path,
+    image_path: tilesheet_path,
     image_size: Size::new(256, 1450),
     columns: 8,
     tile_count: 360,
@@ -62,7 +70,7 @@ It's analogous to the example with the same name in the `wfc-image` crate.
 You can run it with:
 
 ```
-cargo run --example=anchor example\input.csv example\tilemap.png
+cargo run --example=anchor examples\input.csv examples\tiles.png
 ```
 
 The program uses a `Forbid` rule which forces the right and bottom borders of the output to be equal to the bottom right corner of the input.
