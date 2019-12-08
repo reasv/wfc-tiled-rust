@@ -30,7 +30,7 @@ use coord_2d::{Coord, Size};
 /// 
 /// # Examples
 ///
-/// ```
+/// ```rust
 /// let input_path = "example\\input.csv";
 /// let tilesheet_path = "example\\tset.png";
 /// let attempts = 1000;

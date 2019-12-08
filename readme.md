@@ -22,7 +22,7 @@ This will produce `out.tmx` and `out.csv` containing the 32x32 tile WFC output.
 
 ### Code
 For convenience I provide code equivalent to the example program here: 
-```Rust
+```rust
 let input_path = "example\\input.csv";
 let tilesheet_path = "example\\tset.png";
 let attempts = 1000;
