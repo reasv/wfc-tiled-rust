@@ -1,11 +1,11 @@
 [package]
 name = "wfc_tiled"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["reasv <7143787+reasv@users.noreply.github.com>"]
 edition = "2018"
 license = "MIT"
-description = "Small library for Wave Function Collapse on Tile-based maps, using the `wfc` crate. Provides Tiled integration"
-
+description = "Small library for Wave Function Collapse on Tile-based maps, using the `wfc` crate. Provides Tiled integration."
+readme = "readme.md"
 [dependencies]
 csv = "1.1"
 wfc = "0.8.1"
