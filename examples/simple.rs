@@ -12,7 +12,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         ::std::process::exit(1);
     }
     let input_path = &args[1];
-    let tilemap_path = args[2].clone();
+    let tileset_path = args[2].clone();
     let attempts = 1000;
     let pattern_size = 2;
     let output_size = Size::new(32, 32);
@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Save as Tiled .tmx file
     let tset = TileSet {
-        image_path: tilemap_path,
+        image_path: tileset_path,
         image_size: Size::new(256, 1450),
         columns: 8,
         tile_count: 360,

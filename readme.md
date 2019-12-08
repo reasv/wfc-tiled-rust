@@ -14,7 +14,7 @@ The `simple` example takes a CSV tile map as its only argument and saves the out
 
 You can run it with:
 ```
-cargo run --example=simple examples\input.csv examples\tiles.png
+cargo run --example=simple examples\input.csv examples\tset.png
 ```
 (Replace the slashes for non-Windows environments)
 
@@ -24,7 +24,7 @@ This will produce `out.tmx` and `out.csv` containing the 32x32 tile WFC output.
 For convenience I provide code equivalent to the example program here: 
 ```Rust
 let input_path = "example\\input.csv";
-let tilesheet_path = "example\\tiles.png";
+let tilesheet_path = "example\\tset.png";
 let attempts = 1000;
 let pattern_size = 2;
 let output_size = Size::new(32, 32);
@@ -70,7 +70,7 @@ It's analogous to the example with the same name in the `wfc-image` crate.
 You can run it with:
 
 ```
-cargo run --example=anchor examples\input.csv examples\tiles.png
+cargo run --example=anchor examples\input.csv examples\tset.png
 ```
 
 The program uses a `Forbid` rule which forces the right and bottom borders of the output to be equal to the bottom right corner of the input.
