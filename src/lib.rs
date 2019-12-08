@@ -1,3 +1,13 @@
+//! Helper functions to use the Wave Function Collapse algorithm provided by the `wfc` crate on tile-based maps.
+//! 
+//! You can load layer CSV files like the ones exported from Tiled, and save the result as another CSV or as a Tiled .tmx file for previewing inside the software.
+//! 
+//! As the underlying library only works on two dimensions, multiple layers are not supported.
+//! 
+//! You should start with the [TilePattern](struct.TilePattern.html) struct.
+//! 
+//! Complete examples are provided in the [crate](https://crates.io/crates/wfc_tiled)'s `examples` folder.
+
 extern crate wfc;
 extern crate grid_2d;
 extern crate coord_2d;
